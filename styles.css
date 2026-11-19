@@ -423,8 +423,9 @@ button { font: inherit; cursor: pointer; }
 [data-theme='dark'] .search { background: #1d242c; border-color: #3c4043; }
 [data-theme='dark'] .search input { color: #e8eaed; }
 [data-theme='dark'] .tile { background: color-mix(in srgb, var(--ink) 24%, #111820); }
+[data-theme='dark'] .tile .sym { color: var(--dark-ink); }
 [data-theme='dark'] .tile .num,
-[data-theme='dark'] .tile .vi { color: color-mix(in srgb, var(--ink) 60%, #e8eaed); }
+[data-theme='dark'] .tile .vi { color: #b9c8d0; }
 [data-theme='dark'] .filter-chip { background: #1d242c; border-color: #3c4043; color: #bdc1c6; }
 [data-theme='dark'] .filter-chip[aria-pressed='true'] { background: color-mix(in srgb, var(--chip-ink) 28%, #151b21); color: #e8eaed; }
 [data-theme='dark'] .fact { border-bottom-color: #2a3138; }

@@ -32,16 +32,16 @@ function setDetailOpen(open) {
 
 // Bảng màu pastel theo nhóm, đối chiếu với bảng tham khảo.
 const THEME = {
-  alkali: { ink: '#00758C', bg: '#DBF8FF' },
-  alkaline: { ink: '#D60024', bg: '#FFEBEB' },
-  transition: { ink: '#6232EC', bg: '#F5ECFD' },
-  post: { ink: '#002C00', bg: '#DCFAEB' },
-  metalloid: { ink: '#945700', bg: '#FEF9E6' },
-  nonmetal: { ink: '#0060F0', bg: '#E6F0FF' },
-  halogen: { ink: '#0060F0', bg: '#E6F0FF' },
-  noble: { ink: '#CD1D5E', bg: '#FFEBEE' },
-  lanthanide: { ink: '#003355', bg: '#E6F5FF' },
-  actinide: { ink: '#C73200', bg: '#FFEADB' },
+  alkali: { ink: '#00758C', darkInk: '#6FC7DC', bg: '#DBF8FF' },
+  alkaline: { ink: '#D60024', darkInk: '#FF8A8A', bg: '#FFEBEB' },
+  transition: { ink: '#6232EC', darkInk: '#B9A3FF', bg: '#F5ECFD' },
+  post: { ink: '#002C00', darkInk: '#8FD6A8', bg: '#DCFAEB' },
+  metalloid: { ink: '#945700', darkInk: '#E3C57A', bg: '#FEF9E6' },
+  nonmetal: { ink: '#0060F0', darkInk: '#8AB4FF', bg: '#E6F0FF' },
+  halogen: { ink: '#0060F0', darkInk: '#8AB4FF', bg: '#E6F0FF' },
+  noble: { ink: '#CD1D5E', darkInk: '#FF9AC1', bg: '#FFEBEE' },
+  lanthanide: { ink: '#003355', darkInk: '#9EC9E8', bg: '#E6F5FF' },
+  actinide: { ink: '#C73200', darkInk: '#FFAB8A', bg: '#FFEADB' },
 };
 
 const PHASES = { solid: 'Rắn', liquid: 'Lỏng', gas: 'Khí' };
@@ -65,6 +65,7 @@ for (const el of elements) {
   tile.style.gridRow = y;
   tile.style.setProperty('--ink', theme.ink);
   tile.style.setProperty('--bg', theme.bg);
+  tile.style.setProperty('--dark-ink', theme.darkInk);
   tile.title = `${el.z}. ${DETAILS[el.z - 1][0]} — ${el.name}`;
   tile.setAttribute('aria-label', `${el.z}. ${el.name}`);
   tile.innerHTML = `<span class="num">${el.z}</span><span class="sym">${el.symbol}</span><span class="vi">${DETAILS[el.z - 1][0]}</span>`;
