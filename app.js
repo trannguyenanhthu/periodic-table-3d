@@ -306,6 +306,7 @@ function select(z, showDetail = true) {
   const [vietnameseName, massNumber, uses] = DETAILS[z - 1];
   const [properties, icon] = ENRICH[z - 1];
   const [shells, density, melting, boiling, discoverers, year] = PHYSICS[z - 1];
+  const [electronegativity, atomicRadius] = PHYSICAL_EXTRA[z - 1];
   const category = CATEGORIES[el.category];
   const theme = THEME[el.category];
   const isotopeKind = RADIOACTIVE.has(z) ? 'đồng vị bền nhất' : 'đồng vị phổ biến nhất';
@@ -333,6 +334,8 @@ function select(z, showDetail = true) {
       ${fact('Khối lượng riêng', temp(density, 'g/cm³'))}
       ${fact('Điểm nóng chảy', temp(melting, '°C'))}
       ${fact('Điểm sôi', temp(boiling, '°C'))}
+      ${fact('Độ âm điện (Pauling)', electronegativity === null ? '—' : electronegativity)}
+      ${fact('Bán kính nguyên tử', atomicRadius === null ? '—' : `${atomicRadius} pm`)}
       ${fact('Người phát hiện ra', discoverers || '—', 'người/cộng đồng ghi nhận lần đầu')}
       ${fact('Năm phát hiện', year || '—')}
       ${fact('Số proton', z)}

@@ -42,7 +42,7 @@ const ENRICH = [
   ['Kim loại chống ăn mòn cực tốt, hấp thụ ít neutron.', 'atom'],
   ['Kim loại dẻo, chịu nhiệt; trở nên siêu dẫn ở nhiệt độ thấp.', 'magnet'],
   ['Kim loại cứng, điểm chảy cao, giữ bền ở nhiệt độ cao.', 'build'],
-  ['Kim loại phóng xạ; Tc-99m phát tia gamma dùng chẩn đoán y học.', 'med'],
+  ['Kim loại phóng xạ, không có đồng vị bền; dễ tạo hợp chất pertechnetate.', 'med'],
   ['Kim loại cứng, giòn, chống mài mòn và xúc tác tốt.', 'catalyst'],
   ['Kim loại rất cứng, chống ăn mòn, phản xạ ánh sáng tốt.', 'catalyst'],
   ['Kim loại dẻo, hấp thụ hydro tốt, là xúc tác mạnh.', 'catalyst'],

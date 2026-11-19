@@ -35,11 +35,12 @@ Sau đó truy cập `http://localhost:8000`.
 | `details.js` | Tên tiếng Việt, đồng vị tính neutron, ứng dụng |
 | `physics.js` | Cấu hình electron, khối lượng riêng, điểm nóng chảy/sôi, người phát hiện |
 | `enrich.js`, `illustrations.js` | Tính chất và biểu tượng SVG minh họa ứng dụng |
+| `physical-extra.js` | Độ âm điện Pauling và bán kính nguyên tử |
 | `vendor/three.min.js` | three.js r128 (MIT), lưu local để chạy offline |
 
 ## Nguồn dữ liệu
 
-Nguyên tử khối và đồng vị theo IUPAC/NUBASE2020; tên tiếng Việt đối chiếu Wikipedia tiếng Việt; dữ liệu vật lý lấy từ gói `mendeleev`. Người phát hiện và năm phát hiện được đối chiếu toàn bộ 118 nguyên tố với bảng tra cứu periodictable.one và Wikipedia "Timeline of chemical element discoveries" — ưu tiên người/cộng đồng **ghi nhận lần đầu** nguyên tố, không phải người cô lập kim loại về sau (ví dụ beryli: Vauquelin 1798; Wöhler và Bussy cô lập kim loại 1828, ghi trong ghi chú lịch sử). Với nguyên tố từ thời cổ đại, năm ghi dạng "4000 BC". Phân loại của các nguyên tố siêu nặng là dự đoán theo nhóm. Mô hình 3D là mô phỏng Bohr đơn giản hóa, không phải đám mây electron lượng tử.
+Nguyên tử khối và đồng vị theo IUPAC/NUBASE2020; tên tiếng Việt đối chiếu Wikipedia tiếng Việt; dữ liệu vật lý lấy từ gói `mendeleev`. Người phát hiện và năm phát hiện được đối chiếu toàn bộ 118 nguyên tố với bảng tra cứu periodictable.one và Wikipedia "Timeline of chemical element discoveries" — ưu tiên người/cộng đồng **ghi nhận lần đầu** nguyên tố, không phải người cô lập kim loại về sau (ví dụ beryli: Vauquelin 1798; Wöhler và Bussy cô lập kim loại 1828, ghi trong ghi chú lịch sử). Ứng dụng thực tế được đối chiếu với chuyên trang Uses của WebElements (ví dụ bổ sung chất ức chế ăn mòn cho Tc, máy đo độ dày cho Pm, đèn hơi thủy ngân cho Sc); một số nguyên tố siêu nặng chỉ có ứng dụng nghiên cứu. Khối lượng riêng, điểm nóng chảy/sôi đã so sánh với bộ dữ liệu Wikipedia; khác biệt nhỏ thường do dạng thù hình hoặc điều kiện đo, nên giữ giá trị `mendeleev`. Độ âm điện và bán kính nguyên tử lấy từ `mendeleev`; ô trống nghĩa là chưa có giá trị đáng tin cho nguyên tố đó. Với nguyên tố từ thời cổ đại, năm ghi dạng "4000 BC". Phân loại của các nguyên tố siêu nặng là dự đoán theo nhóm. Mô hình 3D là mô phỏng Bohr đơn giản hóa, không phải đám mây electron lượng tử.
 
 ## GitHub Pages
 
