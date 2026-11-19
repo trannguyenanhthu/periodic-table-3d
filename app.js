@@ -4,6 +4,31 @@ const infoBody = document.getElementById('info-body');
 const infoHead = document.getElementById('info-head');
 const stage = document.getElementById('atom-stage');
 const toast = document.getElementById('toast');
+const appEl = document.querySelector('.app');
+const themeToggle = document.getElementById('theme-toggle');
+const resetButton = document.getElementById('reset');
+const mobileQuery = window.matchMedia('(max-width: 700px)');
+
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Chuyển chế độ sáng' : 'Chuyển chế độ tối');
+}
+let storedTheme = null;
+try { storedTheme = localStorage.getItem('pt-theme'); } catch {}
+setTheme(storedTheme === 'dark' || storedTheme === 'light'
+  ? storedTheme
+  : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+themeToggle.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  setTheme(next);
+  try { localStorage.setItem('pt-theme', next); } catch {}
+});
+
+function setDetailOpen(open) {
+  appEl.classList.toggle('detail-open', open);
+  resetButton.textContent = open ? '\u2190' : '\u00d7';
+  resetButton.setAttribute('aria-label', open ? 'Quay lại bảng tuần hoàn' : 'Quay lại nguyên tố đầu tiên');
+}
 
 // Bảng màu pastel theo nhóm, đối chiếu với bảng tham khảo.
 const THEME = {
@@ -273,7 +298,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-function select(z) {
+function select(z, showDetail = true) {
   const el = elements[z - 1];
   if (!el) return;
   current = z;
@@ -325,6 +350,7 @@ function select(z) {
   `;
 
   renderAtom(shells, theme.ink, el.symbol);
+  if (mobileQuery.matches && showDetail) setDetailOpen(true);
 }
 
 function showToast(message) {
@@ -343,7 +369,11 @@ async function share() {
   }
 }
 
-document.getElementById('reset').addEventListener('click', () => {
+resetButton.addEventListener('click', () => {
+  if (mobileQuery.matches && appEl.classList.contains('detail-open')) {
+    setDetailOpen(false);
+    return;
+  }
   select(1);
   document.querySelector('.table-scroll').scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 });
@@ -354,7 +384,9 @@ document.getElementById('share-bottom').addEventListener('click', share);
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') select(Math.min(118, current + 1));
   if (event.key === 'ArrowLeft') select(Math.max(1, current - 1));
+  if (event.key === 'Escape' && appEl.classList.contains('detail-open')) setDetailOpen(false);
 });
 
 initThree();
-select(1);
+select(1, false);
+mobileQuery.addEventListener('change', (event) => { if (!event.matches) setDetailOpen(false); });

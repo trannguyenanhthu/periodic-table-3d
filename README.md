@@ -9,7 +9,9 @@ Website tương tác tentang 118 nguyên tố hóa học: bảng tuần hoàn m�
 - Tìm kiếm theo tên tiếng Anh, tên tiếng Việt, ký hiệu hoặc số nguyên tử; `Enter` chọn kết quả đầu tiên.
 - Lọc theo 10 nhóm hóa học; lọc và tìm kiếm dùng đồng thời.
 - Thông tin mỗi nguyên tố: khối lượng nguyên tử, khối lượng riêng, điểm nóng chảy/sôi, người và năm phát hiện, proton/neutron/electron, đồng vị dùng để tính neutron, nhóm, chu kỳ, trạng thái, cấu hình lớp electron, tính chất, ứng dụng và hình minh họa.
-- Giao diện đáp ứng, thu gọn được thanh thông tin, dùng mũi tên trái/phải để chuyển nguyên tố.
+- Giao diện đáp ứng; trên mobile bảng chiếm toàn màn hình, bấm một nguyên tố sẽ mở màn hình chi tiết toàn màn hình (có nút quay lại), như bảng tuần hoàn 3D của Google.
+- Chế độ tối/sáng có nút chuyển đổi và được lưu trong trình duyệt.
+- Dùng mũi tên trái/phải để chuyển nguyên tố; thanh thông tin có thể thu gọn trên desktop.
 
 ## Chạy locally
 

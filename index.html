@@ -21,6 +21,10 @@
         </label>
         <span class="brand">Hóa học 3D</span>
         <button class="icon-btn" id="collapse" type="button" aria-label="Thu gọn thanh thông tin">&rsaquo;</button>
+        <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Chuyển chế độ tối">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>
+        </button>
       </header>
         <button class="icon-btn expand-btn" id="expand" type="button" aria-label="Mở lại thanh thông tin">&lsaquo;</button>
 
@@ -40,9 +44,9 @@
         </section>
 
         <aside class="info" id="info" aria-live="polite">
-          <div id="info-head"></div>
           <div class="atom-stage" id="atom-stage" role="img" aria-label="Mô hình nguyên tử 3D"></div>
           <p class="hint">Kéo để xoay mô hình nguyên tử</p>
+          <div id="info-head"></div>
           <div id="info-body"></div>
         </aside>
       </main>
