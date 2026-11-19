@@ -247,7 +247,7 @@ const pointers = new Map();
 let pinchDistance = 0;
 stage.addEventListener('pointerdown', (event) => {
   pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-  stage.setPointerCapture(event.pointerId);
+  try { stage.setPointerCapture(event.pointerId); } catch {}
   if (pointers.size === 2) {
     const [a, b] = [...pointers.values()];
     pinchDistance = Math.hypot(a.x - b.x, a.y - b.y);
@@ -383,9 +383,13 @@ function renderAtom(shells, core, symbol) {
 }
 function applyMotionState() {
   const moving = 1 - motionBlend;
-  const viewX = pauseSnapshot ? pauseSnapshot.viewX : atomTiltX;
-  const viewY = pauseSnapshot ? pauseSnapshot.viewY : atomSpin;
-  camera.position.y = 0.3 * moving;
+  if (motionPaused && motionBlend > 0.999) {
+    atomGroup.rotation.set(atomTiltX, atomSpin, 0);
+  } else {
+    const viewX = pauseSnapshot ? pauseSnapshot.viewX : atomTiltX;
+    const viewY = pauseSnapshot ? pauseSnapshot.viewY : atomSpin;
+    atomGroup.rotation.set(viewX * moving, viewY * moving, 0);
+  }
   shellGroups.forEach((shell, index) => {
     let x; let y; let z; let ez;
     if (pauseSnapshot) {
@@ -566,14 +570,27 @@ resetButton.addEventListener('click', () => {
 document.getElementById('collapse').addEventListener('click', () => document.querySelector('.app').classList.add('collapsed'));
 document.getElementById('expand').addEventListener('click', () => document.querySelector('.app').classList.remove('collapsed'));
 document.getElementById('share-bottom').addEventListener('click', share);
+const infoExpand = document.getElementById('info-expand');
+const infoBackdrop = document.getElementById('info-backdrop');
+function setInfoExpanded(expanded) {
+  const on = expanded && !mobileQuery.matches;
+  appEl.classList.toggle('info-expanded', on);
+  infoBackdrop.hidden = !on;
+  infoExpand.textContent = on ? '⤡' : '⤢';
+  infoExpand.setAttribute('aria-pressed', String(on));
+  infoExpand.setAttribute('aria-label', on ? 'Thu nhỏ panel thông tin' : 'Phóng to panel thông tin');
+}
+infoExpand.addEventListener('click', () => setInfoExpanded(!appEl.classList.contains('info-expanded')));
+infoBackdrop.addEventListener('click', () => setInfoExpanded(false));
 
 document.addEventListener('keydown', (event) => {
   if (event.target === search) return;
   if (event.key === 'ArrowRight') select(Math.min(118, current + 1));
   if (event.key === 'ArrowLeft') select(Math.max(1, current - 1));
+  if (event.key === 'Escape' && appEl.classList.contains('info-expanded')) setInfoExpanded(false);
   if (event.key === 'Escape' && appEl.classList.contains('detail-open')) setDetailOpen(false);
 });
 
 initThree();
 select(1, false);
-mobileQuery.addEventListener('change', (event) => { if (!event.matches) setDetailOpen(false); });
+mobileQuery.addEventListener('change', (event) => { if (event.matches) setInfoExpanded(false); });
