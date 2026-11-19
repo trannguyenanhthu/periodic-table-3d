@@ -482,11 +482,24 @@ function showCallout(z, el, theme, show) {
   callout.style.setProperty('--ink', theme.ink);
   callout.hidden = false;
 }
+function resetAtomView() {
+  motionPaused = false;
+  pauseSnapshot = null;
+  motionBlend = 0;
+  atomSpin = 0;
+  atomTiltX = 0;
+  motionButton.textContent = '❚❚';
+  motionButton.setAttribute('aria-label', 'Dừng chuyển động');
+  motionButton.setAttribute('aria-pressed', 'false');
+  setZoom(1);
+  setInfoExpanded(false);
+}
 
 function select(z, showDetail = true) {
   const el = elements[z - 1];
   if (!el) return;
   current = z;
+  resetAtomView();
   for (const [number, tile] of tiles) tile.classList.toggle('selected', number === z);
 
   const [vietnameseName, massNumber, uses] = DETAILS[z - 1];
