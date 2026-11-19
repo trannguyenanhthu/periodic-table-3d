@@ -28,19 +28,22 @@ function setDetailOpen(open) {
   resetButton.setAttribute('aria-label', open ? 'Quay lại bảng tuần hoàn' : 'Quay lại nguyên tố đầu tiên');
 }
 
-// Bảng màu theo sơ đồ tham khảo: xanh kim loại, vàng chuyển tiếp, đỏ phi kim, xanh lá khí hiếm.
+// Bảng màu theo sách: xanh kim loại, vàng chuyển tiếp, đỏ phi kim, xanh lá khí hiếm.
 const THEME = {
-  alkali: { ink: '#0C3B66', darkInk: '#8FC4EE', bg: '#A9CDEC' },
-  alkaline: { ink: '#0C3B66', darkInk: '#8FC4EE', bg: '#A9CDEC' },
-  post: { ink: '#0C3B66', darkInk: '#8FC4EE', bg: '#A9CDEC' },
-  transition: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F8DA7A' },
-  lanthanide: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F8DA7A' },
-  actinide: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F8DA7A' },
-  metalloid: { ink: '#7A2317', darkInk: '#F0A99E', bg: '#F4AFA3' },
-  nonmetal: { ink: '#7A2317', darkInk: '#F0A99E', bg: '#F4AFA3' },
-  halogen: { ink: '#7A2317', darkInk: '#F0A99E', bg: '#F4AFA3' },
-  noble: { ink: '#31520B', darkInk: '#BFE39A', bg: '#B9DD90' },
+  alkali: { ink: '#08345A', darkInk: '#8FC4EE', bg: '#5B9BD5' },
+  alkaline: { ink: '#08345A', darkInk: '#8FC4EE', bg: '#5B9BD5' },
+  post: { ink: '#08345A', darkInk: '#8FC4EE', bg: '#5B9BD5' },
+  transition: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F9D65C' },
+  lanthanide: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F9D65C' },
+  actinide: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F9D65C' },
+  metalloid: { ink: '#6E1B12', darkInk: '#F0A99E', bg: '#E86F62' },
+  nonmetal: { ink: '#6E1B12', darkInk: '#F0A99E', bg: '#E86F62' },
+  halogen: { ink: '#6E1B12', darkInk: '#F0A99E', bg: '#E86F62' },
+  noble: { ink: '#2E4A08', darkInk: '#BFE39A', bg: '#A9C94B' },
+  hydrogen: { ink: '#202124', darkInk: '#e8eaed', bg: '#ffffff' },
 };
+// Sách tô riêng bốn ô này khác với nhóm của chúng.
+const COLOR_OVERRIDE = { 1: 'hydrogen', 32: 'post', 51: 'post', 117: 'post' };
 
 const PHASES = { solid: 'Rắn', liquid: 'Lỏng', gas: 'Khí' };
 const elements = ELEMENTS.map(([z, symbol, name, mass, category, group, period]) => ({ z, symbol, name, mass, category, group, period }));
@@ -63,7 +66,7 @@ function valence(z, group) {
 }
 const GROUPS = ['IA', 'IIA', 'IIIB', 'IVB', 'VB', 'VIB', 'VIIB', 'VIIIB', 'VIIIB', 'VIIIB', 'IB', 'IIB', 'IIIA', 'IVA', 'VA', 'VIA', 'VIIA', 'VIIIA'];
 document.getElementById('col-head').innerHTML = GROUPS.map((g, i) => `<span>${i + 1}<small>${g}</small></span>`).join('');
-document.getElementById('row-head').innerHTML = [1, 2, 3, 4, 5, 6, 7].map(n => `<span>${n}</span>`).join('') + '<span class="spacer"></span><span>*</span><span>**</span>';
+document.getElementById('row-head').innerHTML = [1, 2, 3, 4, 5, 6, 7].map(n => `<span>${n}</span>`).join('') + '<span class="spacer"></span><span></span><span></span>';
 
 function positionOf(el) {
   if (el.z >= 57 && el.z <= 71) return { x: 3 + el.z - 57, y: 9 };
@@ -73,7 +76,7 @@ function positionOf(el) {
 
 for (const el of elements) {
   const { x, y } = positionOf(el);
-  const theme = THEME[el.category];
+  const theme = THEME[COLOR_OVERRIDE[el.z] || el.category];
   const tile = document.createElement('button');
   tile.type = 'button';
   tile.className = 'tile';
@@ -84,7 +87,9 @@ for (const el of elements) {
   tile.style.setProperty('--dark-ink', theme.darkInk);
   tile.title = `${el.z}. ${DETAILS[el.z - 1][0]} — ${el.name}`;
   tile.setAttribute('aria-label', `${el.z}. ${el.name}`);
-  tile.innerHTML = `<span class="num">${el.z}</span><span class="cfg">${valence(el.z, el.group)}</span><span class="sym">${el.symbol}</span><span class="vi">${DETAILS[el.z - 1][0]}</span><span class="mass">${el.mass}</span>`;
+  const showCfg = el.period <= 2 || (el.period === 4 && el.group >= 3 && el.group <= 12);
+  tile.dataset.cfg = showCfg ? valence(el.z, el.group) : '';
+  tile.innerHTML = `<span class="num">${el.z}</span><span class="sym">${el.symbol}</span><span class="vi">${DETAILS[el.z - 1][0]}</span><span class="mass">${el.mass}</span>`;
   tile.addEventListener('click', () => select(el.z));
   table.appendChild(tile);
   tiles.set(el.z, tile);
@@ -98,6 +103,14 @@ for (const [row, mark] of [[6, '*'], [7, '**']]) {
   cell.setAttribute('aria-hidden', 'true');
   table.appendChild(cell);
 }
+for (const [row, text] of [[9, '* lanthanides'], [10, '** actinides']]) {
+  const label = document.createElement('div');
+  label.className = 'f-label';
+  label.style.gridColumn = '1 / 3';
+  label.style.gridRow = row;
+  label.textContent = text;
+  table.appendChild(label);
+}
 for (const button of document.querySelectorAll('.special-tiles button')) {
   button.addEventListener('click', () => select(+button.dataset.z));
 }
@@ -108,28 +121,31 @@ function fact(label, value, sub = '') {
 const search = document.getElementById('search');
 const resultCount = document.getElementById('result-count');
 const filterBar = document.getElementById('filter-bar');
-let activeCategory = null;
+let activeGroup = null;
+const FILTER_GROUPS = {
+  metal: { label: 'Kim loại', categories: ['alkali', 'alkaline', 'post'], ink: '#08345A', bg: '#5B9BD5' },
+  transition: { label: 'Kim loại chuyển tiếp', categories: ['transition', 'lanthanide', 'actinide'], ink: '#5A4100', bg: '#F9D65C' },
+  nonmetal: { label: 'Phi kim', categories: ['metalloid', 'nonmetal', 'halogen'], ink: '#6E1B12', bg: '#E86F62' },
+  noble: { label: 'Khí hiếm', categories: ['noble'], ink: '#2E4A08', bg: '#A9C94B' },
+};
 
-function makeFilterButton(key, label, ink, bg) {
+function makeFilterButton(key, group) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'filter-chip';
-  button.style.setProperty('--chip-ink', ink);
-  button.style.setProperty('--chip-bg', bg);
-  button.setAttribute('aria-pressed', String(key === null));
-  button.innerHTML = `${key === null ? '' : '<span class="swatch"></span>'}${label}`;
+  button.dataset.key = key;
+  button.style.setProperty('--chip-ink', group.ink);
+  button.style.setProperty('--chip-bg', group.bg);
+  button.setAttribute('aria-pressed', 'false');
+  button.innerHTML = `<span class="swatch"></span>${group.label}`;
   button.addEventListener('click', () => {
-    activeCategory = key;
-    for (const other of filterBar.children) other.setAttribute('aria-pressed', String(other === button));
+    activeGroup = activeGroup === key ? null : key;
+    for (const other of filterBar.children) other.setAttribute('aria-pressed', String(other.dataset.key === activeGroup));
     applyFilter();
   });
   filterBar.appendChild(button);
 }
-
-makeFilterButton(null, 'Tất cả', '#3c4043', '#f1f3f4');
-for (const [key, category] of Object.entries(CATEGORIES)) {
-  makeFilterButton(key, category.label, THEME[key].ink, THEME[key].bg);
-}
+for (const [key, group] of Object.entries(FILTER_GROUPS)) makeFilterButton(key, group);
 
 function matches(el, query) {
   const vietnameseName = DETAILS[el.z - 1][0];
@@ -144,11 +160,11 @@ function applyFilter() {
   const query = search.value.trim().toLowerCase();
   let shown = 0;
   for (const el of elements) {
-    const match = matches(el, query) && (!activeCategory || el.category === activeCategory);
+    const match = matches(el, query) && (!activeGroup || FILTER_GROUPS[activeGroup].categories.includes(el.category));
     tiles.get(el.z).classList.toggle('dim', !match);
     if (match) shown++;
   }
-  resultCount.textContent = (query || activeCategory) ? `${shown} / ${elements.length} nguyên tố` : '';
+  resultCount.textContent = (query || activeGroup) ? `${shown} / ${elements.length} nguyên tố` : '';
 }
 
 search.addEventListener('input', applyFilter);
@@ -160,7 +176,7 @@ search.addEventListener('keydown', (event) => {
   }
   if (event.key === 'Enter') {
     const query = search.value.trim().toLowerCase();
-    const first = elements.find(el => matches(el, query) && (!activeCategory || el.category === activeCategory));
+    const first = elements.find(el => matches(el, query) && (!activeGroup || FILTER_GROUPS[activeGroup].categories.includes(el.category)));
     if (first) select(first.z);
   }
 });
@@ -338,6 +354,9 @@ function showCallout(z, el, theme, show) {
     '.vi': DETAILS[z - 1][0], '.mass': el.mass,
   };
   for (const [selector, value] of Object.entries(values)) callout.querySelector(selector).textContent = value;
+  const hasCfg = !!values['.cfg'];
+  callout.querySelector('.cc .cfg').hidden = !hasCfg;
+  callout.querySelector('.r-cfg').hidden = !hasCfg;
   callout.style.setProperty('--bg', theme.bg);
   callout.style.setProperty('--ink', theme.ink);
   callout.hidden = false;
@@ -354,7 +373,7 @@ function select(z, showDetail = true) {
   const [shells, density, melting, boiling, discoverers, year] = PHYSICS[z - 1];
   const [electronegativity, atomicRadius] = PHYSICAL_EXTRA[z - 1];
   const category = CATEGORIES[el.category];
-  const theme = THEME[el.category];
+  const theme = THEME[COLOR_OVERRIDE[z] || el.category];
   const isotopeKind = RADIOACTIVE.has(z) ? 'đồng vị bền nhất' : 'đồng vị phổ biến nhất';
   const caption = uses.split(/[,;]/)[0].trim();
   const temp = (value, unit) => value === null ? '—' : `${value} ${unit}`;

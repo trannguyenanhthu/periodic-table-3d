@@ -144,9 +144,14 @@ button { font: inherit; cursor: pointer; }
   gap: 2px;
 }
 .row-head span { display: grid; place-items: center; font-size: 11px; color: #5f6368; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 0 34px; font-size: 11px; color: #5f6368; }
-.legend span { display: inline-flex; align-items: center; gap: 5px; }
-.legend span::before { content: ''; width: 12px; height: 12px; border: 1px solid rgb(0 0 0 / 12%); border-radius: 2px; background: var(--lg); }
+.legend { display: grid; grid-template-columns: repeat(2, max-content); gap: 4px 16px; margin: 10px 0 0 34px; font-size: 12px; color: #3c4043; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend span::before { content: ''; width: 40px; height: 16px; border: 1px solid rgb(0 0 0 / 15%); background: var(--lg); }
+.table-title { margin: 0 0 4px 34px; text-align: center; font-size: 22px; font-weight: 700; text-transform: uppercase; color: #2E6FA7; }
+.table-title sup { font-size: 10px; }
+.axis-note { display: flex; gap: 18px; margin: 0 0 3px 34px; font-size: 11px; color: #5f6368; }
+.table-note { margin: 12px 0 0 34px; font-size: 11px; color: #5f6368; }
+.f-label { display: grid; place-items: center; text-align: center; font-size: 9px; color: #5f6368; }
 .tile.placeholder { background: #f1f3f4; color: #5f6368; font-size: 16px; cursor: default; }
 .tile.placeholder:hover { transform: none; filter: none; }
 .special-config { margin: 12px 0 0 34px; }
@@ -160,7 +165,7 @@ button { font: inherit; cursor: pointer; }
   padding: 4px 8px;
   border: 0;
   border-radius: 2px;
-  background: #F8DA7A;
+  background: #F9D65C;
   color: #5A4100;
   font-size: 12px;
 }
@@ -170,6 +175,8 @@ button { font: inherit; cursor: pointer; }
   grid-column: 3 / 13;
   grid-row: 1 / 4;
   z-index: 6;
+  position: relative;
+  top: -10px;
   display: grid;
   grid-template-columns: 1fr 148px 1fr;
   grid-template-rows: 24px 26px 26px 64px 26px;
@@ -267,17 +274,22 @@ button { font: inherit; cursor: pointer; }
   font-size: 8px;
   line-height: 1.2;
 }
-.tile .cfg {
+.tile[data-cfg]:not([data-cfg=''])::before {
+  content: attr(data-cfg);
   position: absolute;
-  top: 1px;
-  right: 3px;
-  max-width: 74%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 100%;
+  padding: 0 2px;
+  border: 1px solid #666;
+  background: #fff;
+  color: #202124;
   font-size: 7px;
-  line-height: 1.1;
-  opacity: 0.8;
+  line-height: 12px;
+  white-space: nowrap;
+  text-align: center;
+  z-index: 2;
 }
 .tile .mass {
   position: absolute;
@@ -474,7 +486,8 @@ button { font: inherit; cursor: pointer; }
   .row-head span { font-size: 9px; }
   .periodic { min-width: 760px; grid-template-rows: repeat(7, 46px) 12px repeat(2, 46px); }
   .tile { height: 46px; }
-  .tile .num, .tile .cfg, .tile .mass { font-size: 6px; }
+  .tile .num, .tile .mass { font-size: 6px; }
+  .tile[data-cfg]::before { font-size: 6px; }
   .tile .sym { font-size: 18px; }
   .tile .vi { font-size: 7px; }
   .bottom-bar h1 { font-size: 16px; }
@@ -560,11 +573,15 @@ button { font: inherit; cursor: pointer; }
 [data-theme='dark'] .tile .sym { color: var(--dark-ink); }
 [data-theme='dark'] .tile .num,
 [data-theme='dark'] .tile .vi,
-[data-theme='dark'] .tile .cfg,
 [data-theme='dark'] .tile .mass { color: #b9c8d0; }
+[data-theme='dark'] .tile[data-cfg]::before { background: #151b21; border-color: #5f6368; color: #e8eaed; }
 [data-theme='dark'] .col-head,
 [data-theme='dark'] .row-head,
-[data-theme='dark'] .legend { color: #9aa0a6; }
+[data-theme='dark'] .legend,
+[data-theme='dark'] .axis-note,
+[data-theme='dark'] .table-note { color: #9aa0a6; }
+[data-theme='dark'] .table-title { color: #8FC4EE; }
+[data-theme='dark'] .f-label { color: #9aa0a6; }
 [data-theme='dark'] .tile.placeholder { background: #252d35; color: #9aa0a6; }
 [data-theme='dark'] .special-config { color: #9aa0a6; }
 [data-theme='dark'] .special-tiles button { background: color-mix(in srgb, #F0D27A 26%, #151b21); color: #F0D27A; }
