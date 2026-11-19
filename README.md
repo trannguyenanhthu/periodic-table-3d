@@ -42,6 +42,8 @@ Sau đó truy cập `http://localhost:8000`.
 
 Nguyên tử khối và đồng vị theo IUPAC/NUBASE2020; tên tiếng Việt đối chiếu Wikipedia tiếng Việt; dữ liệu vật lý lấy từ gói `mendeleev`. Người phát hiện và năm phát hiện được đối chiếu toàn bộ 118 nguyên tố với bảng tra cứu periodictable.one và Wikipedia "Timeline of chemical element discoveries" — ưu tiên người/cộng đồng **ghi nhận lần đầu** nguyên tố, không phải người cô lập kim loại về sau (ví dụ beryli: Vauquelin 1798; Wöhler và Bussy cô lập kim loại 1828, ghi trong ghi chú lịch sử). Ứng dụng thực tế được đối chiếu với chuyên trang Uses của WebElements (ví dụ bổ sung chất ức chế ăn mòn cho Tc, máy đo độ dày cho Pm, đèn hơi thủy ngân cho Sc); một số nguyên tố siêu nặng chỉ có ứng dụng nghiên cứu. Khối lượng riêng, điểm nóng chảy/sôi đã so sánh với bộ dữ liệu Wikipedia; khác biệt nhỏ thường do dạng thù hình hoặc điều kiện đo, nên giữ giá trị `mendeleev`. Độ âm điện và bán kính nguyên tử lấy từ `mendeleev`; ô trống nghĩa là chưa có giá trị đáng tin cho nguyên tố đó. Với nguyên tố từ thời cổ đại, năm ghi dạng "4000 BC". Phân loại của các nguyên tố siêu nặng là dự đoán theo nhóm. Mô hình 3D là mô phỏng Bohr đơn giản hóa, không phải đám mây electron lượng tử.
 
+Đã tải và đối chiếu lần lượt trang *Uses* của WebElements cho cả 118 nguyên tố. Không phát hiện mục ứng dụng nào sai sự thật; bổ sung chi tiết cho Be (con quay hồi chuyển, hợp kim Be-Cu), La (pin NiMH, đèn carbon), Th (màn đèn Welsbach) và Np (máy dò neutron). Các nguyên tố từ Es trở đi được WebElements ghi là "không có ứng dụng"; website ghi trung thực là chỉ tổng hợp để nghiên cứu.
+
 ## GitHub Pages
 
 Trang được công bố tại https://twotnguyen.github.io/periodic-table-3d/

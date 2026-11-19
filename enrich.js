@@ -89,7 +89,7 @@ const ENRICH = [
   ['Kim loại kiềm phóng xạ, cực không ổn định và hiếm nhất.', 'research'],
   ['Kim loại phóng xạ, phát quang nhẹ, từng dùng trong đồng hồ.', 'atom'],
   ['Kim loại phóng xạ mềm, là nguồn phát neutron.', 'atom'],
-  ['Kim loại phóng xạ, chu kỳ bán rã rất dài, tiềm năng làm nhiên liệu.', 'atom'],
+  ['Kim loại phóng xạ, chu kỳ bán rã rất dài, có thể tạo hợp kim chịu nhiệt.', 'atom'],
   ['Kim loại phóng xạ hiếm, tạo ra khi urani phân rã.', 'research'],
   ['Kim loại nặng, phóng xạ, có khả năng phân hạch.', 'atom'],
   ['Kim loại phóng xạ nhân tạo, không có đáng kể trong tự nhiên.', 'research'],
