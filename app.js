@@ -66,8 +66,8 @@ document.getElementById('col-head').innerHTML = GROUPS.map((g, i) => `<span>${i 
 document.getElementById('row-head').innerHTML = [1, 2, 3, 4, 5, 6, 7].map(n => `<span>${n}</span>`).join('') + '<span class="spacer"></span><span>*</span><span>**</span>';
 
 function positionOf(el) {
-  if (el.z >= 58 && el.z <= 71) return { x: 3 + el.z - 58, y: 9 };
-  if (el.z >= 90 && el.z <= 103) return { x: 3 + el.z - 90, y: 10 };
+  if (el.z >= 57 && el.z <= 71) return { x: 3 + el.z - 57, y: 9 };
+  if (el.z >= 89 && el.z <= 103) return { x: 3 + el.z - 89, y: 10 };
   return { x: el.group, y: el.period };
 }
 
@@ -88,6 +88,18 @@ for (const el of elements) {
   tile.addEventListener('click', () => select(el.z));
   table.appendChild(tile);
   tiles.set(el.z, tile);
+}
+for (const [row, mark] of [[6, '*'], [7, '**']]) {
+  const cell = document.createElement('div');
+  cell.className = 'tile placeholder';
+  cell.style.gridColumn = 3;
+  cell.style.gridRow = row;
+  cell.textContent = mark;
+  cell.setAttribute('aria-hidden', 'true');
+  table.appendChild(cell);
+}
+for (const button of document.querySelectorAll('.special-tiles button')) {
+  button.addEventListener('click', () => select(+button.dataset.z));
 }
 
 function fact(label, value, sub = '') {
@@ -315,6 +327,22 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+const callout = document.getElementById('callout');
+
+function showCallout(z, el, theme, show) {
+  if (!show || mobileQuery.matches) { callout.hidden = true; return; }
+  const tile = tiles.get(z);
+  if (!tile) return;
+  const values = {
+    '.cfg': valence(z, el.group), '.num': z, '.sym': el.symbol,
+    '.vi': DETAILS[z - 1][0], '.mass': el.mass,
+  };
+  for (const [selector, value] of Object.entries(values)) callout.querySelector(selector).textContent = value;
+  callout.style.setProperty('--bg', theme.bg);
+  callout.style.setProperty('--ink', theme.ink);
+  callout.hidden = false;
+}
+
 function select(z, showDetail = true) {
   const el = elements[z - 1];
   if (!el) return;
@@ -371,6 +399,7 @@ function select(z, showDetail = true) {
   `;
 
   renderAtom(shells, theme.ink, el.symbol);
+  showCallout(z, el, theme, showDetail);
   if (mobileQuery.matches && showDetail) setDetailOpen(true);
 }
 
