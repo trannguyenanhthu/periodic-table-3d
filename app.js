@@ -28,24 +28,42 @@ function setDetailOpen(open) {
   resetButton.setAttribute('aria-label', open ? 'Quay lại bảng tuần hoàn' : 'Quay lại nguyên tố đầu tiên');
 }
 
-// Bảng màu pastel theo nhóm, đối chiếu với bảng tham khảo.
+// Bảng màu theo sơ đồ tham khảo: xanh kim loại, vàng chuyển tiếp, đỏ phi kim, xanh lá khí hiếm.
 const THEME = {
-  alkali: { ink: '#00758C', darkInk: '#6FC7DC', bg: '#DBF8FF' },
-  alkaline: { ink: '#D60024', darkInk: '#FF8A8A', bg: '#FFEBEB' },
-  transition: { ink: '#6232EC', darkInk: '#B9A3FF', bg: '#F5ECFD' },
-  post: { ink: '#002C00', darkInk: '#8FD6A8', bg: '#DCFAEB' },
-  metalloid: { ink: '#945700', darkInk: '#E3C57A', bg: '#FEF9E6' },
-  nonmetal: { ink: '#0060F0', darkInk: '#8AB4FF', bg: '#E6F0FF' },
-  halogen: { ink: '#0060F0', darkInk: '#8AB4FF', bg: '#E6F0FF' },
-  noble: { ink: '#CD1D5E', darkInk: '#FF9AC1', bg: '#FFEBEE' },
-  lanthanide: { ink: '#003355', darkInk: '#9EC9E8', bg: '#E6F5FF' },
-  actinide: { ink: '#C73200', darkInk: '#FFAB8A', bg: '#FFEADB' },
+  alkali: { ink: '#0C3B66', darkInk: '#8FC4EE', bg: '#A9CDEC' },
+  alkaline: { ink: '#0C3B66', darkInk: '#8FC4EE', bg: '#A9CDEC' },
+  post: { ink: '#0C3B66', darkInk: '#8FC4EE', bg: '#A9CDEC' },
+  transition: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F8DA7A' },
+  lanthanide: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F8DA7A' },
+  actinide: { ink: '#5A4100', darkInk: '#F0D27A', bg: '#F8DA7A' },
+  metalloid: { ink: '#7A2317', darkInk: '#F0A99E', bg: '#F4AFA3' },
+  nonmetal: { ink: '#7A2317', darkInk: '#F0A99E', bg: '#F4AFA3' },
+  halogen: { ink: '#7A2317', darkInk: '#F0A99E', bg: '#F4AFA3' },
+  noble: { ink: '#31520B', darkInk: '#BFE39A', bg: '#B9DD90' },
 };
 
 const PHASES = { solid: 'Rắn', liquid: 'Lỏng', gas: 'Khí' };
 const elements = ELEMENTS.map(([z, symbol, name, mass, category, group, period]) => ({ z, symbol, name, mass, category, group, period }));
 const tiles = new Map();
 let current = 1;
+const SUP = ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'];
+const sup = n => String(n).split('').map(d => SUP[+d]).join('');
+const VALENCE_EXTRA = {
+  24: '(n−1)d⁵ns¹', 29: '(n−1)d¹⁰ns¹', 41: '(n−1)d⁴ns¹', 42: '(n−1)d⁵ns¹',
+  44: '(n−1)d⁷ns¹', 45: '(n−1)d⁸ns¹', 46: '(n−1)d¹⁰ns⁰', 47: '(n−1)d¹⁰ns¹',
+  78: '(n−1)d⁹ns¹', 79: '(n−1)d¹⁰ns¹',
+};
+function valence(z, group) {
+  if (z === 2) return '1s²';
+  if (z >= 57 && z <= 71 || z >= 89 && z <= 103) return '';
+  if (VALENCE_EXTRA[z]) return VALENCE_EXTRA[z];
+  if (group <= 2) return `ns${sup(group)}`;
+  if (group <= 12) return `(n−1)d${sup(group - 2)}ns²`;
+  return `ns²np${sup(group - 12)}`;
+}
+const GROUPS = ['IA', 'IIA', 'IIIB', 'IVB', 'VB', 'VIB', 'VIIB', 'VIIIB', 'VIIIB', 'VIIIB', 'IB', 'IIB', 'IIIA', 'IVA', 'VA', 'VIA', 'VIIA', 'VIIIA'];
+document.getElementById('col-head').innerHTML = GROUPS.map((g, i) => `<span>${i + 1}<small>${g}</small></span>`).join('');
+document.getElementById('row-head').innerHTML = [1, 2, 3, 4, 5, 6, 7].map(n => `<span>${n}</span>`).join('') + '<span class="spacer"></span><span>*</span><span>**</span>';
 
 function positionOf(el) {
   if (el.z >= 58 && el.z <= 71) return { x: 3 + el.z - 58, y: 9 };
@@ -66,7 +84,7 @@ for (const el of elements) {
   tile.style.setProperty('--dark-ink', theme.darkInk);
   tile.title = `${el.z}. ${DETAILS[el.z - 1][0]} — ${el.name}`;
   tile.setAttribute('aria-label', `${el.z}. ${el.name}`);
-  tile.innerHTML = `<span class="num">${el.z}</span><span class="sym">${el.symbol}</span><span class="vi">${DETAILS[el.z - 1][0]}</span>`;
+  tile.innerHTML = `<span class="num">${el.z}</span><span class="cfg">${valence(el.z, el.group)}</span><span class="sym">${el.symbol}</span><span class="vi">${DETAILS[el.z - 1][0]}</span><span class="mass">${el.mass}</span>`;
   tile.addEventListener('click', () => select(el.z));
   table.appendChild(tile);
   tiles.set(el.z, tile);

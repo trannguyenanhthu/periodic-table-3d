@@ -33,7 +33,19 @@
         <section class="table-area" aria-label="Bảng tuần hoàn các nguyên tố">
           <div class="filter-bar" id="filter-bar" aria-label="Lọc theo nhóm hóa học"></div>
           <div class="table-scroll">
-            <div class="periodic" id="table"></div>
+            <div class="table-frame">
+              <div class="col-head" id="col-head" aria-hidden="true"></div>
+              <div class="table-grid">
+                <div class="row-head" id="row-head" aria-hidden="true"></div>
+                <div class="periodic" id="table"></div>
+              </div>
+              <div class="legend" aria-label="Chú thích màu">
+                <span style="--lg:#A9CDEC">Kim loại</span>
+                <span style="--lg:#F8DA7A">Kim loại chuyển tiếp</span>
+                <span style="--lg:#F4AFA3">Phi kim</span>
+                <span style="--lg:#B9DD90">Khí hiếm</span>
+              </div>
+            </div>
           </div>
           <div class="bottom-bar">
             <h1>Bảng tuần hoàn hoá học 3D</h1>
