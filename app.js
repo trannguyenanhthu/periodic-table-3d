@@ -383,6 +383,7 @@ function renderAtom(shells, core, symbol) {
 }
 function applyMotionState() {
   const moving = 1 - motionBlend;
+  camera.position.y = 0.3 * moving;
   if (motionPaused && motionBlend > 0.999) {
     atomGroup.rotation.set(atomTiltX, atomSpin, 0);
   } else {
