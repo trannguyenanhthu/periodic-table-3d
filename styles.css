@@ -429,7 +429,10 @@ button { font: inherit; cursor: pointer; }
 [data-theme='dark'] .share-inline:hover { background: #232b33; }
 [data-theme='dark'] .search { background: #1d242c; border-color: #3c4043; }
 [data-theme='dark'] .search input { color: #e8eaed; }
-[data-theme='dark'] .tile { background: color-mix(in srgb, var(--ink) 24%, #111820); }
+[data-theme='dark'] .tile {
+  background: color-mix(in srgb, var(--dark-ink) 30%, #0d151c);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dark-ink) 32%, transparent);
+}
 [data-theme='dark'] .tile .sym { color: var(--dark-ink); }
 [data-theme='dark'] .tile .num,
 [data-theme='dark'] .tile .vi { color: #b9c8d0; }
