@@ -333,7 +333,7 @@ function select(z, showDetail = true) {
       ${fact('Khối lượng riêng', temp(density, 'g/cm³'))}
       ${fact('Điểm nóng chảy', temp(melting, '°C'))}
       ${fact('Điểm sôi', temp(boiling, '°C'))}
-      ${fact('Người phát hiện ra', discoverers || '—')}
+      ${fact('Người phát hiện ra', discoverers || '—', 'người/cộng đồng ghi nhận lần đầu')}
       ${fact('Năm phát hiện', year || '—')}
       ${fact('Số proton', z)}
       ${fact('Số neutron', z === 1 ? 0 : massNumber - z, `${el.symbol}-${massNumber}, ${isotopeKind}`)}
