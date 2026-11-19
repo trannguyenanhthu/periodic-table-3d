@@ -345,6 +345,7 @@ function select(z, showDetail = true) {
       ${fact('Lớp electron', `<div class="shells">${shells.map(n => `<span class="shell">${n}</span>`).join('')}</div>`)}
     </dl>
 
+    ${HISTORY[z] ? `<div class="history-note"><h3>Lịch sử phát hiện</h3><ul>${HISTORY[z].map(item => `<li>${item}</li>`).join('')}</ul></div>` : ''}
     <p class="source">Nguồn dữ liệu: IUPAC, mendeleev và NUBASE2020. Mô hình 3D là mô phỏng Bohr đơn giản hóa.</p>
   `;
 

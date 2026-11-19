@@ -296,6 +296,10 @@ button { font: inherit; cursor: pointer; }
 }
 
 .source { margin-top: 18px; font-size: 11px; color: #80868b; }
+.history-note { margin-top: 16px; padding: 12px 14px; border-left: 3px solid #1a73e8; border-radius: 0 8px 8px 0; background: #f1f6fd; }
+.history-note h3 { margin: 0 0 6px; font-size: 12px; color: #5f6368; }
+.history-note ul { margin: 0; padding-left: 16px; }
+.history-note li { font-size: 12px; line-height: 1.55; color: #3c4043; }
 .source button {
   border: 0;
   background: transparent;
@@ -444,6 +448,9 @@ button { font: inherit; cursor: pointer; }
 [data-theme='dark'] .app-visual strong { color: #e8eaed; }
 [data-theme='dark'] .atom-stage { background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--core) 16%, transparent), transparent 65%); }
 [data-theme='dark'] .toast { background: #e8eaed; color: #202124; }
+[data-theme='dark'] .history-note { background: #1d242c; }
+[data-theme='dark'] .history-note h3 { color: #9aa0a6; }
+[data-theme='dark'] .history-note li { color: #e8eaed; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }

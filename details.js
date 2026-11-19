@@ -127,3 +127,12 @@ const RADIOACTIVE = new Set([
   100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114,
   115, 116, 117, 118,
 ]);
+
+// Ghi chú lịch sử cho các nguyên tố có câu chuyện phát hiện đặc biệt.
+const HISTORY = {
+  4: [
+    '1798 — Louis-Nicolas Vauquelin (Pháp) nhận ra nguyên tố dưới dạng oxit trong beryl và ngọc lục bảo; ban đầu gọi là glucinium (tiếng Hy Lạp glykys = "ngọt") vì muối của nó có vị ngọt.',
+    '1828 — Friedrich Wöhler (Đức) và Antoine Bussy (Pháp) độc lập tách được kim loại nguyên chất bằng cách cho kali tác dụng với beryllium clorua (BeCl₂).',
+    'Thế kỷ 20 — Tên beryllium, lấy từ khoáng vật beryl, được dùng chính thức thay cho glucinium.',
+  ],
+};
