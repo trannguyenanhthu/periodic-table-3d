@@ -87,8 +87,12 @@
         <aside class="info" id="info" aria-live="polite">
           <div class="atom-stage" id="atom-stage" role="img" aria-label="Mô hình nguyên tử 3D"></div>
           <div class="stage-controls">
-            <p class="hint">Kéo để xoay mô hình nguyên tử</p>
-            <button class="motion-btn" id="motion-toggle" type="button" aria-label="Dừng chuyển động" aria-pressed="false">❚❚</button>
+            <p class="hint">Kéo để xoay · cuộn để phóng to</p>
+            <div class="stage-actions">
+              <button class="motion-btn" id="zoom-out" type="button" aria-label="Thu nhỏ">−</button>
+              <button class="motion-btn" id="motion-toggle" type="button" aria-label="Dừng chuyển động" aria-pressed="false">❚❚</button>
+              <button class="motion-btn" id="zoom-in" type="button" aria-label="Phóng to">+</button>
+            </div>
           </div>
           <div id="info-head"></div>
           <div id="info-body"></div>

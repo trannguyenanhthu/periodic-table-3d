@@ -393,6 +393,7 @@ button { font: inherit; cursor: pointer; }
 .hint { margin: 0 0 16px; text-align: center; font-size: 11px; color: #80868b; }
 .stage-controls { order: 2; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 16px; }
 .stage-controls .hint { margin: 0; }
+.stage-actions { display: flex; align-items: center; gap: 6px; flex: none; }
 .motion-btn { width: 28px; height: 28px; flex: none; border: 1px solid #dadce0; border-radius: 50%; background: #fff; color: #3c4043; font-size: 11px; line-height: 1; display: grid; place-items: center; cursor: pointer; }
 .motion-btn:hover { background: #f1f3f4; }
 [data-theme='dark'] .motion-btn { background: #1d242c; border-color: #3c4043; color: #bdc1c6; }
@@ -519,18 +520,18 @@ button { font: inherit; cursor: pointer; }
     z-index: 15;
     width: 100%;
     height: 100vh;
-    padding: 0;
+    padding: 56px 0 0;
     overflow-y: auto;
     border-left: 0;
     background: #fff;
   }
   .app.detail-open .atom-stage {
     order: 0;
-    width: calc(100% - 24px);
-    height: 250px;
-    margin: 14px 12px 0;
+    width: 100%;
+    height: 320px;
+    margin: 0;
     flex: none;
-    min-height: 250px;
+    min-height: 320px;
   }
   .app.detail-open .stage-controls { order: 1; margin: 0 0 12px; }
   .app.detail-open #info-head {

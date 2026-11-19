@@ -222,22 +222,44 @@ function initThree() {
   atomGroup = new THREE.Group();
   scene.add(atomGroup);
 
-  stage.addEventListener('pointerdown', (event) => {
+const pointers = new Map();
+let pinchDistance = 0;
+stage.addEventListener('pointerdown', (event) => {
+  pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+  stage.setPointerCapture(event.pointerId);
+  if (pointers.size === 2) {
+    const [a, b] = [...pointers.values()];
+    pinchDistance = Math.hypot(a.x - b.x, a.y - b.y);
+    dragging = false;
+  } else if (pointers.size === 1) {
     dragging = true;
     lastX = event.clientX;
     lastY = event.clientY;
-    stage.setPointerCapture(event.pointerId);
-  });
-  stage.addEventListener('pointermove', (event) => {
-    if (!dragging) return;
-    atomSpin += (event.clientX - lastX) * 0.008;
-    atomTiltX = Math.max(-1.2, Math.min(1.2, atomTiltX + (event.clientY - lastY) * 0.008));
-    lastX = event.clientX;
-    lastY = event.clientY;
-  });
-  const stop = () => { dragging = false; };
-  stage.addEventListener('pointerup', stop);
-  stage.addEventListener('pointercancel', stop);
+  }
+});
+stage.addEventListener('pointermove', (event) => {
+  if (!pointers.has(event.pointerId)) return;
+  pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+  if (pointers.size === 2) {
+    const [a, b] = [...pointers.values()];
+    const distance = Math.hypot(a.x - b.x, a.y - b.y);
+    if (pinchDistance) setZoom(zoom * (distance / pinchDistance));
+    pinchDistance = distance;
+    return;
+  }
+  if (!dragging) return;
+  atomSpin += (event.clientX - lastX) * 0.008;
+  atomTiltX = Math.max(-1.2, Math.min(1.2, atomTiltX + (event.clientY - lastY) * 0.008));
+  lastX = event.clientX;
+  lastY = event.clientY;
+});
+const stopPointer = (event) => {
+  pointers.delete(event.pointerId);
+  if (pointers.size < 2) pinchDistance = 0;
+  if (!pointers.size) dragging = false;
+};
+stage.addEventListener('pointerup', stopPointer);
+stage.addEventListener('pointercancel', stopPointer);
 
   new ResizeObserver(() => {
     if (!renderer) return;
@@ -309,11 +331,11 @@ function renderAtom(shells, core, symbol) {
   atomGroup.add(makeSymbolSprite(symbol));
   atomGroup.add(new THREE.PointLight(coreColor, 1.5, 7));
 
-  const electronGeometry = new THREE.SphereGeometry(0.072, 16, 16);
+  const electronGeometry = new THREE.SphereGeometry(0.045, 12, 12);
   const electronMaterial = new THREE.MeshBasicMaterial({ color: 0x1E8E3E });
 
   shells.forEach((count, index) => {
-    const radius = 0.95 + index * Math.min(0.45, 1.75 / Math.max(1, shells.length - 1));
+    const radius = 0.95 + index * Math.min(0.45, 1 / Math.max(1, shells.length - 1));
     const group = new THREE.Group();
     group.rotation.set(0, 0, 0);
 
@@ -342,15 +364,15 @@ function applyMotionState() {
   const moving = 1 - motionBlend;
   const viewX = pauseSnapshot ? pauseSnapshot.viewX : atomTiltX;
   const viewY = pauseSnapshot ? pauseSnapshot.viewY : atomSpin;
-  atomGroup.rotation.set(viewX * moving, viewY * moving, 0);
+  camera.position.y = 0.3 * moving;
   shellGroups.forEach((shell, index) => {
     let x; let y; let z; let ez;
     if (pauseSnapshot) {
       const from = pauseSnapshot[index];
       x = from.x * moving; y = from.y * moving; z = from.z * moving; ez = from.ez * moving;
     } else {
-      x = Math.sin(shell.phase * 1.2) * 0.75 * moving;
-      y = Math.cos(shell.phase * 0.95) * 0.95 * moving;
+      x = Math.sin(shell.phase * 1.2) * 1.05 * moving;
+      y = Math.cos(shell.phase * 0.95) * 1.3 * moving;
       z = shell.spin * moving;
       ez = shell.electronSpin * moving;
     }
@@ -359,6 +381,19 @@ function applyMotionState() {
   });
 }
 
+let zoom = 1;
+function setZoom(value) {
+  if (!camera) return;
+  zoom = Math.max(0.6, Math.min(2.5, value));
+  camera.zoom = zoom;
+  camera.updateProjectionMatrix();
+}
+document.getElementById('zoom-in').addEventListener('click', () => setZoom(zoom * 1.1));
+document.getElementById('zoom-out').addEventListener('click', () => setZoom(zoom / 1.1));
+stage.addEventListener('wheel', (event) => {
+  event.preventDefault();
+  setZoom(zoom * (event.deltaY > 0 ? 0.96 : 1.04));
+}, { passive: false });
 const motionButton = document.getElementById('motion-toggle');
 motionButton.addEventListener('click', () => {
   motionPaused = !motionPaused;
