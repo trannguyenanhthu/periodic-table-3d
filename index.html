@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bảng tuần hoàn hoá học 3D</title>
+    <meta name="description" content="Bảng tuần hoàn 118 nguyên tố với mô hình nguyên tử 3D và thông tin đầy đủ.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <button class="icon-btn" id="reset" type="button" aria-label="Quay lại nguyên tố đầu tiên">&times;</button>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg>
+          <span class="sr-only">Tìm nguyên tố theo tên hoặc ký hiệu</span>
+          <input id="search" type="search" placeholder="Tên hoặc ký hiệu nguyên tố…" autocomplete="off">
+        </label>
+        <span class="brand">Hóa học 3D</span>
+        <button class="icon-btn" id="collapse" type="button" aria-label="Thu gọn thanh thông tin">&rsaquo;</button>
+      </header>
+        <button class="icon-btn expand-btn" id="expand" type="button" aria-label="Mở lại thanh thông tin">&lsaquo;</button>
+
+      <main class="content">
+        <section class="table-area" aria-label="Bảng tuần hoàn các nguyên tố">
+          <div class="filter-bar" id="filter-bar" aria-label="Lọc theo nhóm hóa học"></div>
+          <div class="table-scroll">
+            <div class="periodic" id="table"></div>
+          </div>
+          <div class="bottom-bar">
+            <h1>Bảng tuần hoàn hoá học 3D</h1>
+            <span class="result-count" id="result-count" aria-live="polite"></span>
+            <button class="share-inline" id="share-bottom" type="button" aria-label="Chia sẻ trang">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.08a3 3 0 0 0-2.04.8L8.9 12.7a3 3 0 0 0 0-1.4l7.06-4.18A3 3 0 1 0 15 4a3 3 0 0 0 .06.6L8 8.78a3 3 0 1 0 0 6.44l7.06 4.18A3 3 0 1 0 18 16.08Z"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <aside class="info" id="info" aria-live="polite">
+          <div id="info-head"></div>
+          <div class="atom-stage" id="atom-stage" role="img" aria-label="Mô hình nguyên tử 3D"></div>
+          <p class="hint">Kéo để xoay mô hình nguyên tử</p>
+          <div id="info-body"></div>
+        </aside>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="elements.js"></script>
+    <script src="details.js"></script>
+    <script src="enrich.js"></script>
+    <script src="illustrations.js"></script>
+    <script src="physics.js"></script>
+    <script src="vendor/three.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+// Minh họa ứng dụng bằng SVG nội bộ: không cần tải ảnh từ mạng.
+const ICONS = {
+  rocket: '<path d="M12 2c3 2 5 6 5 10l-5 4-5-4c0-4 2-8 5-10Z"/><circle cx="12" cy="9" r="2"/><path d="m9 16-3 5 5-2m4-3 3 5-5-2"/>',
+  battery: '<rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10v4M7 12h3l1.5-3 2 6 1.5-3h2"/>',
+  glass: '<path d="M9 3h6M10 3v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M7 15h10"/>',
+  build: '<path d="M3 21h18M6 21V8l6-4 6 4v13M10 21v-5h4v5"/>',
+  leaf: '<path d="M20 4C9 4 4 9 4 16a4 4 0 0 0 4 4c7 0 12-5 12-16ZM4 20c3-5 7-8 12-10"/>',
+  med: '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 7v10M7 12h10"/>',
+  water: '<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/>',
+  bulb: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.8 1 1.5 1 2.5h6c0-1 .3-1.7 1-2.5A6 6 0 0 0 12 3Z"/>',
+  chip: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4"/>',
+  wire: '<path d="M4 12a4 4 0 0 1 8 0v4a4 4 0 0 0 8 0M4 12v4a4 4 0 0 0 4 4m12-8v2"/>',
+  magnet: '<path d="M6 4v8a6 6 0 0 0 12 0V4h-4v8a2 2 0 0 1-4 0V4H6ZM6 8h4m4 0h4"/>',
+  catalyst: '<circle cx="12" cy="12" r="3"/><path d="M3 7h6m-3-3v6M21 17h-6m3-3v6"/>',
+  gem: '<path d="m7 4 10 0 3 5-8 11L4 9l3-5ZM4 9h16M9 4l-2 5 5 11 5-11-2-5"/>',
+  atom: '<circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+  energy: '<circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/>',
+  research: '<path d="M9 3h6M10 3v7L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 10V3M7 15h10"/>',
+  tool: '<path d="M14.7 6.3a4 4 0 0 0-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5l-3 3-3-3 3-3Z"/>',
+};
