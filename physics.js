@@ -4,7 +4,7 @@ const PHYSICS = [
   [[1], 8.2e-05, -259.16, -252.88, 'Henry Cavendish', 1766],
   [[2], 0.000164, null, -268.93, 'Sir William Ramsey, Nils Langet, P.T.Cleve', 1895],
   [[2, 1], 0.534, 180.5, 1342, 'Johann Arfwedson', 1817],
-  [[2, 2], 1.85, 1287, 2468, 'Fredrich Wöhler, A.A.Bussy', 1798],
+  [[2, 2], 1.85, 1287, 2468, 'Louis Nicolas Vauquelin', 1798],
   [[2, 3], 2.34, 2077, 4000, 'Sir H. Davy, J.L. Gay-Lussac, L.J. Thénard', 1808],
   [[2, 4], 2.2, null, 3825, 'Known to the ancients', null],
   [[2, 5], 0.001145, -210, -195.79, 'Daniel Rutherford', 1772],

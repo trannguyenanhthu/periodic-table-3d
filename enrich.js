@@ -3,7 +3,7 @@ const ENRICH = [
   ['Khí không màu, nhẹ nhất; cháy tạo nước, dễ tạo liên kết cộng hóa trị.', 'rocket'],
   ['Khí trơ, điểm sôi thấp nhất; gần như không phản ứng hóa học.', 'rocket'],
   ['Kim loại mềm nhất, phản ứng mạnh với nước; ion Li cho màu đỏ khi đốt.', 'battery'],
-  ['Kim loại cứng, nhẹ, chịu nhiệt; bột và hơi beryli rất độc.', 'glass'],
+  ['Kim loại cứng, nhẹ, chịu nhiệt; bột và hơi beryli rất độc. Vauquelin nhận ra nguyên tố trong beryl năm 1798; Wöhler và Bussy cô lập kim loại năm 1828.', 'glass'],
   ['Á kim giòn, chịu nhiệt; tạo thủy tinh borosilicate chống sốc nhiệt.', 'glass'],
   ['Có nhiều dạng thù hình: than chì dẫn điện, kim cương cứng nhất.', 'build'],
   ['Khí trơ ở điều kiện thường, chiếm 78% không khí; cần để tạo amonia.', 'leaf'],
