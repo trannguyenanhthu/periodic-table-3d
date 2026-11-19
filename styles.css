@@ -391,6 +391,11 @@ button { font: inherit; cursor: pointer; }
 }
 
 .hint { margin: 0 0 16px; text-align: center; font-size: 11px; color: #80868b; }
+.stage-controls { order: 2; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 16px; }
+.stage-controls .hint { margin: 0; }
+.motion-btn { width: 28px; height: 28px; flex: none; border: 1px solid #dadce0; border-radius: 50%; background: #fff; color: #3c4043; font-size: 11px; line-height: 1; display: grid; place-items: center; cursor: pointer; }
+.motion-btn:hover { background: #f1f3f4; }
+[data-theme='dark'] .motion-btn { background: #1d242c; border-color: #3c4043; color: #bdc1c6; }
 
 .desc { margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #3c4043; }
 
@@ -527,7 +532,7 @@ button { font: inherit; cursor: pointer; }
     flex: none;
     min-height: 250px;
   }
-  .app.detail-open .hint { order: 1; margin: 0 0 12px; }
+  .app.detail-open .stage-controls { order: 1; margin: 0 0 12px; }
   .app.detail-open #info-head {
     order: 2;
     flex: none;

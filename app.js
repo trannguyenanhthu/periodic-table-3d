@@ -189,6 +189,13 @@ let shellGroups = [];
 let dragging = false;
 let lastX = 0;
 let lastY = 0;
+let motionPaused = false;
+let motionBlend = 0;
+let atomSpin = 0;
+let atomTiltX = 0;
+const GOLDEN_ANGLE = 2.399963;
+let pauseSnapshot = null;
+const shortAngle = a => Math.atan2(Math.sin(a), Math.cos(a));
 
 function initThree() {
   try {
@@ -223,8 +230,8 @@ function initThree() {
   });
   stage.addEventListener('pointermove', (event) => {
     if (!dragging) return;
-    atomGroup.rotation.y += (event.clientX - lastX) * 0.008;
-    atomGroup.rotation.x = Math.max(-1.2, Math.min(1.2, atomGroup.rotation.x + (event.clientY - lastY) * 0.008));
+    atomSpin += (event.clientX - lastX) * 0.008;
+    atomTiltX = Math.max(-1.2, Math.min(1.2, atomTiltX + (event.clientY - lastY) * 0.008));
     lastX = event.clientX;
     lastY = event.clientY;
   });
@@ -302,20 +309,13 @@ function renderAtom(shells, core, symbol) {
   atomGroup.add(makeSymbolSprite(symbol));
   atomGroup.add(new THREE.PointLight(coreColor, 1.5, 7));
 
-  const tilts = [66, 25, 78, 38, 58, 20, 82];
   const electronGeometry = new THREE.SphereGeometry(0.072, 16, 16);
-  const electronMaterial = new THREE.MeshStandardMaterial({
-    color: 0xbcd8ff,
-    emissive: 0x0b57d0,
-    emissiveIntensity: 1.8,
-    roughness: 0.2,
-    metalness: 0,
-  });
+  const electronMaterial = new THREE.MeshBasicMaterial({ color: 0x1E8E3E });
 
   shells.forEach((count, index) => {
-    const radius = 0.95 + index * 0.28;
+    const radius = 0.95 + index * Math.min(0.45, 1.75 / Math.max(1, shells.length - 1));
     const group = new THREE.Group();
-    group.rotation.set(tilts[index % tilts.length] * Math.PI / 180, (index * 43) * Math.PI / 180, 0);
+    group.rotation.set(0, 0, 0);
 
     const ring = new THREE.Mesh(
       new THREE.TorusGeometry(radius, 0.009, 8, 128),
@@ -323,23 +323,84 @@ function renderAtom(shells, core, symbol) {
     );
     group.add(ring);
 
+    const electronGroup = new THREE.Group();
+    electronGroup.rotation.copy(group.rotation);
     for (let k = 0; k < count; k++) {
       const angle = (Math.PI * 2 * k) / count;
       const electron = new THREE.Mesh(electronGeometry, electronMaterial);
       electron.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
-      group.add(electron);
+      electronGroup.add(electron);
     }
 
-    atomGroup.add(group);
-    shellGroups.push({ group, speed: (index % 2 ? -1 : 1) * (0.0022 + index * 0.0006) });
+    atomGroup.add(group, electronGroup);
+    const base = (index % 2 ? -1 : 1) * 0.004;
+    shellGroups.push({ group, electronGroup, speed: base * 3, electronSpeed: base * 1.5, spin: 0, electronSpin: 0, phase: index * GOLDEN_ANGLE });
+  });
+  if (motionPaused) applyMotionState();
+}
+function applyMotionState() {
+  const moving = 1 - motionBlend;
+  const viewX = pauseSnapshot ? pauseSnapshot.viewX : atomTiltX;
+  const viewY = pauseSnapshot ? pauseSnapshot.viewY : atomSpin;
+  atomGroup.rotation.set(viewX * moving, viewY * moving, 0);
+  shellGroups.forEach((shell, index) => {
+    let x; let y; let z; let ez;
+    if (pauseSnapshot) {
+      const from = pauseSnapshot[index];
+      x = from.x * moving; y = from.y * moving; z = from.z * moving; ez = from.ez * moving;
+    } else {
+      x = Math.sin(shell.phase * 1.2) * 0.75 * moving;
+      y = Math.cos(shell.phase * 0.95) * 0.95 * moving;
+      z = shell.spin * moving;
+      ez = shell.electronSpin * moving;
+    }
+    shell.group.rotation.set(x, y, z);
+    shell.electronGroup.rotation.set(x, y, ez);
   });
 }
+
+const motionButton = document.getElementById('motion-toggle');
+motionButton.addEventListener('click', () => {
+  motionPaused = !motionPaused;
+  if (motionPaused) {
+    pauseSnapshot = shellGroups.map(shell => ({
+      x: shell.group.rotation.x, y: shell.group.rotation.y, z: shortAngle(shell.group.rotation.z),
+      ez: shortAngle(shell.electronGroup.rotation.z), phase: shell.phase,
+    }));
+    pauseSnapshot.viewX = atomTiltX;
+    pauseSnapshot.viewY = shortAngle(atomSpin);
+  } else {
+    if (pauseSnapshot) {
+      shellGroups.forEach((shell, index) => {
+        shell.phase = pauseSnapshot[index].phase;
+        shell.spin = pauseSnapshot[index].z;
+        shell.electronSpin = pauseSnapshot[index].ez;
+      });
+      atomSpin = pauseSnapshot.viewY;
+    }
+    pauseSnapshot = null;
+  }
+  motionButton.textContent = motionPaused ? '▶' : '❚❚';
+  motionButton.setAttribute('aria-label', motionPaused ? 'Tiếp tục chuyển động' : 'Dừng chuyển động');
+  motionButton.setAttribute('aria-pressed', String(motionPaused));
+});
 
 function animate() {
   requestAnimationFrame(animate);
   if (!renderer || !stage.clientWidth) return;
-  for (const shell of shellGroups) shell.group.rotation.z += shell.speed;
-  atomGroup.rotation.y += 0.0012;
+  const target = motionPaused ? 1 : 0;
+  motionBlend += (target - motionBlend) * 0.025;
+  if (Math.abs(target - motionBlend) < 0.001) motionBlend = target;
+  const t = motionBlend;
+  const moving = 1 - t * t * (3 - 2 * t);
+  if (!motionPaused || motionBlend < 0.999) {
+    shellGroups.forEach((shell) => {
+      shell.phase += 0.02 * moving;
+      shell.spin = shortAngle(shell.spin + shell.speed * moving);
+      shell.electronSpin = shortAngle(shell.electronSpin + shell.electronSpeed * moving);
+    });
+  }
+  applyMotionState();
   renderer.render(scene, camera);
 }
 
