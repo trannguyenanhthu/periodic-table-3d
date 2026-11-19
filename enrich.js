@@ -22,7 +22,7 @@ const ENRICH = [
   ['Kim loại kiềm thổ, tạo hợp chất rắn như đá vôi; cần cho xương.', 'build'],
   ['Kim loại nhẹ, mềm, hiếm; tính chất giống nhôm và ytri.', 'build'],
   ['Kim loại cứng, nhẹ, chống ăn mòn và chịu nhiệt rất tốt.', 'build'],
-  ['Kim loại cứng, dẻo, chịu nhiệt; hợp chất có nhiều màu sắc.', 'build'],
+  ['Kim loại mềm, dẻo, chịu nhiệt; hợp chất có nhiều màu sắc.', 'build'],
   ['Kim loại cứng, bóng, chống gỉ; hợp chất crom thường xanh lục.', 'build'],
   ['Kim loại cứng, giòn, làm tăng độ cứng của thép.', 'build'],
   ['Kim loại từ tính, dẻo, dễ bị gỉ trong không khí ẩm.', 'build'],

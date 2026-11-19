@@ -44,6 +44,8 @@ Nguyên tử khối và đồng vị theo IUPAC/NUBASE2020; tên tiếng Việt 
 
 Đã tải và đối chiếu lần lượt trang *Uses* của WebElements cho cả 118 nguyên tố. Không phát hiện mục ứng dụng nào sai sự thật; bổ sung chi tiết cho Be (con quay hồi chuyển, hợp kim Be-Cu), La (pin NiMH, đèn carbon), Th (màn đèn Welsbach) và Np (máy dò neutron). Các nguyên tố từ Es trở đi được WebElements ghi là "không có ứng dụng"; website ghi trung thực là chỉ tổng hợp để nghiên cứu.
 
+Đã tải trang tính chất vật lý và trang chính của WebElements cho cả 118 nguyên tố. Khối lượng riêng của chất rắn/lỏng khớp với dữ liệu hiện hành sai số rất nhỏ; với khí, website dùng **khối lượng riêng của khí ở điều kiện thường** còn WebElements nêu khối lượng riêng của thể rắn — đây là khác biệt về trạng thái, không phải sai số. Điểm nóng chảy/sôi được đối chiếu thêm với WebElements: một số giá trị lệch do niên độ dữ liệu và dạng thù hình (B, C, Si, Cu, Ce, Pr, Pm, Ac), nên giữ nguyên giá trị `mendeleev`. Độ âm điện Pauling đã được thay bằng giá trị WebElements cho 94 nguyên tố có số liệu (sửa các giá trị cũ của Tc, Lu, W, Au, Tl, Pb, U…); bán kính nguyên tử vẫn lấy từ `mendeleev`. Đã sửa mô tả tính chất của V (kim loại mềm, không phải cứng).
+
 ## GitHub Pages
 
 Trang được công bố tại https://twotnguyen.github.io/periodic-table-3d/
