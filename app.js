@@ -137,7 +137,18 @@ const FILTER_GROUPS = {
   nonmetal: { label: 'Phi kim', categories: ['metalloid', 'nonmetal', 'halogen'], ink: '#6E1B12', bg: '#E86F62' },
   noble: { label: 'Khí hiếm', categories: ['noble'], ink: '#2E4A08', bg: '#A9C94B' },
 };
+const COLOR_GROUP = {
+  alkali: 'metal', alkaline: 'metal', post: 'metal', hydrogen: 'nonmetal',
+  transition: 'transition', lanthanide: 'transition', actinide: 'transition',
+  metalloid: 'nonmetal', nonmetal: 'nonmetal', halogen: 'nonmetal', noble: 'noble',
+};
+const groupOf = el => COLOR_GROUP[COLOR_OVERRIDE[el.z] || el.category];
 
+function setActiveGroup(key) {
+  activeGroup = key;
+  for (const button of filterBar.children) button.setAttribute('aria-pressed', String(button.dataset.key === key));
+  applyFilter();
+}
 function makeFilterButton(key, group) {
   const button = document.createElement('button');
   button.type = 'button';
@@ -147,14 +158,15 @@ function makeFilterButton(key, group) {
   button.style.setProperty('--chip-bg', group.bg);
   button.setAttribute('aria-pressed', 'false');
   button.innerHTML = `<span class="swatch"></span>${group.label}`;
-  button.addEventListener('click', () => {
-    activeGroup = activeGroup === key ? null : key;
-    for (const other of filterBar.children) other.setAttribute('aria-pressed', String(other.dataset.key === activeGroup));
-    applyFilter();
-  });
+  button.addEventListener('click', () => setActiveGroup(activeGroup === key ? null : key));
   filterBar.appendChild(button);
 }
 for (const [key, group] of Object.entries(FILTER_GROUPS)) makeFilterButton(key, group);
+document.addEventListener('pointerdown', (event) => {
+  if (!activeGroup || !event.target.closest('.table-area')) return;
+  if (filterBar.contains(event.target) || event.target.closest('.tile')) return;
+  setActiveGroup(null);
+});
 
 function matches(el, query) {
   const vietnameseName = DETAILS[el.z - 1][0];
@@ -169,7 +181,7 @@ function applyFilter() {
   const query = search.value.trim().toLowerCase();
   let shown = 0;
   for (const el of elements) {
-    const match = matches(el, query) && (!activeGroup || FILTER_GROUPS[activeGroup].categories.includes(el.category));
+    const match = matches(el, query) && (!activeGroup || groupOf(el) === activeGroup);
     tiles.get(el.z).classList.toggle('dim', !match);
     if (match) shown++;
   }
@@ -185,7 +197,7 @@ search.addEventListener('keydown', (event) => {
   }
   if (event.key === 'Enter') {
     const query = search.value.trim().toLowerCase();
-    const first = elements.find(el => matches(el, query) && (!activeGroup || FILTER_GROUPS[activeGroup].categories.includes(el.category)));
+    const first = elements.find(el => matches(el, query) && (!activeGroup || groupOf(el) === activeGroup));
     if (first) select(first.z);
   }
 });
