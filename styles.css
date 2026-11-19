@@ -505,15 +505,14 @@ button { font: inherit; cursor: pointer; }
   .bottom-bar h1 { font-size: 16px; }
   .bottom-bar { height: auto; min-height: 56px; flex-wrap: wrap; padding: 8px 12px; }
   .credit { position: static; transform: none; flex: 1 0 100%; margin: 0 0 0 auto; text-align: right; font-size: 13px; }
+  .bottom-figure { flex-direction: column; align-items: stretch; gap: 14px; width: calc(100vw - 24px); margin: 14px 0 0; }
+  .legend { width: 100%; grid-template-columns: repeat(2, 1fr); }
+  .legend-box { height: 40px; }
+  .special-config { width: 100%; }
+  .special-tiles button { width: 56px; height: 50px; font-size: 16px; }
+  .table-note { width: calc(100vw - 24px); margin: 12px 0 0; }
 
-  .info { display: none; }
-  .app.detail-open .table-area { display: none; }
-  .app.detail-open .topbar { z-index: 20; }
-  .app.detail-open .search,
-  .app.detail-open #collapse,
-  .app.detail-open .expand-btn { display: none; }
-  .app.detail-open .brand { display: block; position: absolute; left: 50%; transform: translateX(-50%); }
-  .app.detail-open .info {
+  .info {
     display: flex;
     position: fixed;
     inset: 0;
@@ -524,7 +523,16 @@ button { font: inherit; cursor: pointer; }
     overflow-y: auto;
     border-left: 0;
     background: #fff;
+    transform: translateX(100%);
+    transition: transform 360ms cubic-bezier(0.25, 0.1, 0.25, 1);
   }
+  .app.closing-detail .topbar { z-index: 20; }
+  .app.detail-open .search,
+  .app.detail-open #collapse,
+  .app.detail-open .expand-btn { display: none; }
+  .app.detail-open .brand { display: block; position: absolute; left: 50%; transform: translateX(-50%); }
+  .app.detail-open .info { transform: translateX(0); }
+  .app.closing-detail .info { transform: translateX(-100%); }
   .app.detail-open .atom-stage {
     order: 0;
     width: 100%;
@@ -560,6 +568,7 @@ button { font: inherit; cursor: pointer; }
 [data-theme='dark'] #info-body,
 [data-theme='dark'] .app.detail-open #info-head,
 [data-theme='dark'] .app.detail-open .info,
+[data-theme='dark'] .app.closing-detail .info,
 [data-theme='dark'] .app.detail-open #info-body { background: #151b21; }
 [data-theme='dark'] .topbar,
 [data-theme='dark'] .info { border-color: #2a3138; }

@@ -22,8 +22,17 @@ themeToggle.addEventListener('click', () => {
   try { localStorage.setItem('pt-theme', next); } catch {}
 });
 
+let detailCloseTimer;
 function setDetailOpen(open) {
-  appEl.classList.toggle('detail-open', open);
+  clearTimeout(detailCloseTimer);
+  if (open) {
+    appEl.classList.remove('closing-detail');
+    appEl.classList.add('detail-open');
+  } else {
+    appEl.classList.remove('detail-open');
+    appEl.classList.add('closing-detail');
+    detailCloseTimer = setTimeout(() => appEl.classList.remove('closing-detail'), 380);
+  }
   resetButton.textContent = open ? '\u2190' : '\u00d7';
   resetButton.setAttribute('aria-label', open ? 'Quay lại bảng tuần hoàn' : 'Quay lại nguyên tố đầu tiên');
 }
