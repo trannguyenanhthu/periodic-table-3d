@@ -48,8 +48,8 @@ const tiles = new Map();
 let current = 1;
 
 function positionOf(el) {
-  if (el.z >= 57 && el.z <= 71) return el.z === 57 ? { x: 3, y: 6 } : { x: 3 + el.z - 58, y: 9 };
-  if (el.z >= 89 && el.z <= 103) return el.z === 89 ? { x: 3, y: 7 } : { x: 3 + el.z - 90, y: 10 };
+  if (el.z >= 58 && el.z <= 71) return { x: 3 + el.z - 58, y: 9 };
+  if (el.z >= 90 && el.z <= 103) return { x: 3 + el.z - 90, y: 10 };
   return { x: el.group, y: el.period };
 }
 
@@ -291,7 +291,7 @@ function renderAtom(shells, core, symbol) {
 
 function animate() {
   requestAnimationFrame(animate);
-  if (!renderer) return;
+  if (!renderer || !stage.clientWidth) return;
   for (const shell of shellGroups) shell.group.rotation.z += shell.speed;
   atomGroup.rotation.y += 0.0012;
   renderer.render(scene, camera);
@@ -349,7 +349,7 @@ function select(z, showDetail = true) {
     </dl>
 
     ${HISTORY[z] ? `<div class="history-note"><h3>Lịch sử phát hiện</h3><ul>${HISTORY[z].map(item => `<li>${item}</li>`).join('')}</ul></div>` : ''}
-    <p class="source">Nguồn dữ liệu: IUPAC, mendeleev và NUBASE2020. Mô hình 3D là mô phỏng Bohr đơn giản hóa.</p>
+    <p class="source">Nguồn dữ liệu: IUPAC, mendeleev và NUBASE2020. Khối lượng riêng của nguyên tố siêu nặng là giá trị dự đoán, không phải số đo. Mô hình 3D là mô phỏng Bohr đơn giản hóa.</p>
   `;
 
   renderAtom(shells, theme.ink, el.symbol);
@@ -385,6 +385,7 @@ document.getElementById('expand').addEventListener('click', () => document.query
 document.getElementById('share-bottom').addEventListener('click', share);
 
 document.addEventListener('keydown', (event) => {
+  if (event.target === search) return;
   if (event.key === 'ArrowRight') select(Math.min(118, current + 1));
   if (event.key === 'ArrowLeft') select(Math.max(1, current - 1));
   if (event.key === 'Escape' && appEl.classList.contains('detail-open')) setDetailOpen(false);

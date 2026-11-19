@@ -90,7 +90,7 @@ const PHYSICS = [
   [[2, 8, 18, 32, 18, 8], 0.009074, -71, -61.7, 'Ernest Rutherford, Robert Bowie Owens', 1899],
   [[2, 8, 18, 32, 18, 8, 1], 1.87, 21, null, 'Marguerite Perey', 1939],
   [[2, 8, 18, 32, 18, 8, 2], 5, 696, null, 'Pierre Curie, Marie Curie', 1898],
-  [[2, 8, 18, 32, 18, 9, 2], 10, 1050, 3200, 'Friedrich Oskar Giesel', 1902],
+  [[2, 8, 18, 32, 18, 9, 2], 10, 1050, 3200, 'André-Louis Debierne', 1899],
   [[2, 8, 18, 32, 18, 10, 2], 11.7, 1750, 4785, 'Jöns Jakob Berzelius', 1829],
   [[2, 8, 18, 32, 20, 9, 2], 15.4, 1572, null, 'Oswald Helmuth Göhring, Kazimierz Fajans', 1913],
   [[2, 8, 18, 32, 21, 9, 2], 19.1, 1135, 4131, 'Martin Heinrich Klaproth', 1789],
