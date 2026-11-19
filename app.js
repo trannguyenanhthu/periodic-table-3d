@@ -15,9 +15,7 @@ function setTheme(theme) {
 }
 let storedTheme = null;
 try { storedTheme = localStorage.getItem('pt-theme'); } catch {}
-setTheme(storedTheme === 'dark' || storedTheme === 'light'
-  ? storedTheme
-  : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+setTheme(storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light');
 themeToggle.addEventListener('click', () => {
   const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   setTheme(next);
