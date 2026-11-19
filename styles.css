@@ -5,6 +5,9 @@
 }
 
 * { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { background: #f8f9fa; }
+html[data-theme='dark'] { background: #0f1419; }
 button { font: inherit; cursor: pointer; }
 
 .app { min-height: 100vh; }
@@ -117,7 +120,7 @@ button { font: inherit; cursor: pointer; }
   align-items: center;
   justify-content: center;
   overflow: auto;
-  padding: 28px 24px;
+  padding: 14px 24px;
 }
 
 .periodic {
